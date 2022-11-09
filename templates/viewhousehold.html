@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        body{
+            background-image: url('static/css/viewhousepage.png');
+            height: 100%;   
+            background-repeat: no-repeat;
+            background-size: cover; 
+        }
+        .billInputs{
+            display: block;
+            display: inline-block;
+        }
+        .checkboxes{
+            padding: 10px;
+        }
+    </style>
+    <head>
+        <script src='static/js/jquery-3.6.0.min.js'></script>
+        <script src='static/js/viewhousehold.js'></script>
+        <script src='static/js/notifications.js'></script>
+        <link rel="stylesheet" href="static/css/main.css" type="text/css" charset="utf-8">
+        <title>Your Households</title>
+    </head>
+    <body>
+
+        <div class="header">
+            {% include "loginnavbar.html" %}
+        </div>
+
+        {% if housefound==True %}
+
+            <div class="maincontent">
+                <div class="maintext"> 
+                <h1>{{ house.name }}</h1>
+                <p><i>Tenants:</i></p>
+                <div class="displayhouseholds">
+                    {% for user in users %}
+                        <p>{{user.username}} {% if house.head_tenant==user.id %} (HEAD TENANT) {% endif %}</p> 
+                    {% endfor %}
+                </div> 
+            </div>
+            {% if allbillscount > 0 %}
+                {% if house.head_tenant!=currentid %}    
+                    <br>
+                    <div class="maintext">
+                        <h1>Outstanding Bills</h1>
+                        <div class="displayhouseholds">
+                            <form method="POST" action='paybills'> 
+                                {% for bill in bills %}
+                                    {% if bill.user_id == currentid %}
+                                        <p> You owe £{{ bill.to_pay }} for {{bill.name}}!</p>
+                                        <div class="checkboxes">
+                                            <input type="checkbox" name="SelectedBills" value="{{ bill.id }}">
+                                            <label for="SelectedBills">{{ bill.name }}</label><br>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <input type="hidden" name="HouseID" value="{{ house.id }}">
+                                <input class="mainbutton" type='submit' value='I Have Paid For These'> 
+                            </form> 
+                        </div> 
+                    </div>
+                {% else %}
+                    <br>
+                    <div class="maintext">
+                        <h1>Outstanding Bills</h1>
+                        <div class="displayhouseholds">
+                            {% for bill in bills %}
+                                {% for user in users %}
+                                    {% if user.id == bill.user_id %}
+                                        <p> User '{{ user.username }}' owes £{{ bill.to_pay }} for {{bill.name}}!</p>
+                                    {% endif %}
+                                {% endfor %}  
+                            {% endfor %}
+                        </div> 
+                    </div>
+                {% endif %}
+            {% else %}
+                <br>
+                <div class="maintext">
+                    {% if house.head_tenant==currentid %}
+                        <h1>Household Has No Outstanding Bills</h1>
+                    {% else %}                       
+                        <h1>You Have No Bills</h1>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <br>
+            
+            {% if house.head_tenant==currentid %}
+            
+                <div class="maintext">
+                    <form method="POST" action='addusertohouse'>
+                        <h1>Invite New User</h1>
+                        <input id="email" class="maininput" name="Email" placeholder="User's Email..."> 
+                        <input id="houseid" type="hidden" name="HouseholdID" value="{{ house.id }}">
+                        <input id="addusertohouse" class="mainbutton" type='submit' value='Submit'> 
+                    </form> 
+                </div>
+
+                <br> 
+                
+                <div class="maintext">
+                    {% if userssize>1 %}
+                        <h1>Add Bills</h1>
+                        <form method="POST" action='addbill'> 
+                            <div class="billInputs">
+                                <input id="billname" class="maininput" placeholder="Name Of Bill..." name="BillName">
+                            </div>
+                            <div class="billInputs">
+                                <input id="billvalue" class="maininput" type="number" placeholder="Amount To Pay..." name="BillCost">
+                            </div>
+                            <div class="billInputs">
+                                <input id="split" type="checkbox" name="Split">
+                                <label for="Split">Split Evenly</label><br>
+                            </div>
+                            <div style="clear:left";></div>
+                            <p>Select Users</p>
+                            
+                                {% for user in users %}
+                                    {% if house.head_tenant!=user.id %}
+                                    <div class="checkboxes">
+                                        <input class="userid" type="checkbox" name="SelectedUsers" value="{{ user.id }}">
+                                        <label for="SelectedUser">{{ user.username }}</label><br>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}  
+                                <br>
+                                <input class="userid" type="checkbox" name="SelectedUsers" value="htenant">
+                                <label for="SelectedUser">Include Yourself in The Bill</label><br>
+                            
+                            <input id="houseid" type="hidden" name="HouseID" value="{{ house.id }}">
+                            <input id="addbills" class="mainbutton" type='submit' value='Send'> 
+                        </form> 
+                    {% else %}
+                        <h1>You are the only tenant, can't add bills.</h1>
+                    {% endif %}
+                </div>
+
+                <br>
+                {% if userssize>1 %}
+                    <div class="maintext">
+                        <h1>Remove User</h1>
+                        <form method="POST" action='removeuser'> 
+                            <select id="userid" class="mainselector" name="UserID">
+                                {% for user in users %}
+                                    {% if house.head_tenant!=user.id %}
+                                    <option value="{{user.id}}">{{user.username}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input id="houseid" type="hidden" name="HouseID" value="{{ house.id }}">
+                            <input id="removeuser" class='mainbutton' type='submit' value='Remove'> 
+                        </form> 
+                    </div>
+                {% else %}
+                    <div class="maintext">
+                        <h1>You are the only tenant, can't remove yourself. Instead, remove household in households page.</h1>
+                    </div>
+                {% endif %}
+            {% endif %}
+            
+            </div>
+
+        {% else %}
+        <div class="maincontent">
+            <div class="maintext"> 
+            <h1>House Not Found</h1>
+            </div>
+        </div>
+        {% endif %}
+    </body>
+
+</html>
+

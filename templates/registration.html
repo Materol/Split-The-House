@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        body{
+            background-image: url('static/css/registerpage.png');
+            height: 100%;   
+            background-repeat: no-repeat;
+            background-size: cover; 
+        }
+    </style>
+    <head>
+        <script src='static/js/jquery-3.6.0.min.js'></script>
+        <script src='static/js/registration.js'></script>
+        <script src='static/js/notifications.js'></script>
+        <link rel="stylesheet" href="static/css/main.css" type="text/css" charset="utf-8">
+        <title>Registration!</title>
+    </head>
+    <body>
+        
+        <div class="header">
+            {% include "loginnavbar.html" %}
+        </div>
+
+        <div class="maincontent">
+            <h1 class="title">Get registered here for a life changing experience!</h1>
+            <div class="formtext"> 
+                    <form action='registersuccess' method="POST"> 
+                        <input id="username" class="maininput" placeholder="A Snazzy Username..." name="Username">
+                        <input id="email" class="maininput" type="email" placeholder="A Unique Email Address..." name="Email">
+                        <input id="password" class="maininput" type='password' placeholder="A Super Secret Password..." name="Password">
+                        <input id="repeatpassword" class="maininput" type='password' placeholder="And The Password Again..." name="ConfirmPassword">
+                        <input id="registerbutton" class="mainbutton" type='submit' value='Simplify Your Life'> 
+                    </form>
+                </div> 
+        </div>
+        
+    </body>
+</html>
+

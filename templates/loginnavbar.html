@@ -1,0 +1,21 @@
+<html lang="en">
+    <ul class="sitebar">
+      <li><img src="static/css/logo.png"></li>
+      <li><p>Split The House</p></li>
+    </ul> 
+</html>
+<!-- I go through every link and compare to the passed in 'currentPage'. If they match, i make it active so CSS can recolor it. Otherwise, it's the usual link button. -->
+<!-- I use lists to easily stack them next to each other using blocks in css, giving padding and spacing and then also float to the left for style. -->
+<html lang="en">
+    <ul class="navbar">
+      {% for link in links %}
+        {% if currentpage==link[0] %}
+          <li class = active><a href="{{ link[0] }}">{{ link[1] }}</a></li>
+        {% else %}
+          <li><a href="{{ link[0] }}">{{ link[1] }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul> 
+</html>
+
+

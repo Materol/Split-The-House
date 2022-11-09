@@ -1,0 +1,166 @@
+.maintext{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-large;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 10px;
+  background: rgb(77, 74, 70); /* in case browser has no rgba support */
+  background: rgba(77, 74, 70, 0.7); /* we change the opacity to see the background */
+  margin-right: 20%;
+  margin-left: 20%;
+}
+.formtext{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: x-large;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  align-self: center;
+  padding: 2%;
+  max-width: 40%;
+  margin: auto;
+  background: rgb(77, 74, 70); /* in case browser has no rgba support */
+  background: rgba(77, 74, 70, 0.7); /* we change the opacity to see the background */
+}
+.title{
+  font-family: 'Courier New', Courier, monospace;
+  font-size: xx-large;
+  text-align: center;
+}
+.maincontent{   /* to seperate main content of page from the header and other possible thing i might add */
+  padding: 80px;
+}
+.maininput{     /* main input boxes. remove their border, increase their size relative to their div. */
+  border: none;
+  padding: 1.5%;
+  width: 90%;
+  margin: 0.5%;
+  text-align: left;
+  font-size: large;
+}
+.mainbutton{     /* trial and error to match size of input box, have a nice green colour for most buttons */
+  border: none;
+  background-color: rgb(5, 167, 5);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 80%;
+  color: white;
+  margin:2%;
+  border-radius: 10px;
+  padding: 1.5%;
+  width: 93.5%;
+  cursor: pointer;
+}
+.mainselector{  /* for a nice wide, stylistic, simplistic drop down box */
+  border: none;
+  background-color: whitesmoke;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 80%;
+  color: black;
+  margin: 0.5%;
+  border-radius: 10px;
+  padding: 1.5%;
+  width: 93.5%;
+  cursor: pointer;
+}
+/* sitebar code*/
+.sitebar{ 
+  list-style-type: none; /*removing bullet points from list*/
+  margin: 0;             /*remove margin and padding to let it fit snug to the page.*/
+  padding: 0;
+  background: rgb(255, 255, 255);
+  overflow: hidden;      /* to prevent other text from coming back to the element from auto resize.*/
+}
+
+.sitebar img{ /* just for the logo dimension */
+  height: 100px;
+  width: 100px;
+  display: block;
+  padding: 20px;
+}
+
+.sitebar li {
+  float: left;
+}
+
+.sitebar p {
+  display: block;
+  padding: 0;
+  font-size: 45px;
+  font-family: "Brush Script MT", "Brush Script Std", cursive;  /* i thought it looked nice for the site name */
+  color: black;
+  text-decoration: none;
+}
+/*navbar code*/
+.navbar{ 
+  list-style-type: none; /*removing bullet points from list*/
+  margin: 0;             /*remove margin and padding to let it fit snug to the page.*/
+  padding: 0;
+  background: rgb(26, 188, 156);
+  background: rgba(26, 188, 156, 0.9);
+  overflow: hidden;      /* to prevent other text from coming back to the element from auto resize.*/
+}
+
+.navbar li {
+  float: left; /* float the list to the left of the bar */
+}
+
+.navbar a {
+  display: block;          /* display as blocks, for clickability and style. add padding for spacing. */
+  padding: 20px;
+  font-size: large;
+  font-family: "FeeMono", monospace;
+  color: white;
+  text-decoration: none;    /* remove the ugly hyperlink underline and colour */
+}
+
+.navbar li a:hover {
+  background-color: rgb(74, 223, 228);
+}
+
+.active {
+  background-color: rgb(18, 121, 100);    /* changing colour for current site */
+}
+
+body{
+  margin: 0;
+  background-color: whitesmoke;
+}
+/*alert code*/
+.notificationRed {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  transition: opacity 0.5s; /* to let the alert fade out over 0.6 seconds instead of instantly becoming opacity 0*/
+}
+
+.notificationBlue {
+  padding: 20px;
+  background-color: #003bfd; 
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  transition: opacity 0.5s;
+}
+
+.notificationGreen {
+  padding: 20px;
+  background-color: rgb(5, 167, 5);
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  transition: opacity 0.5s;
+}
+/* for the closing 'x' button */
+.closebutton {
+  margin-left: 15px;    /* so long messages don't get too close */
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;    /* move it up a bit more centred*/
+  cursor: pointer;      /* change to a pointer when hovering over, to show clickability */
+}
+
+
+  

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .displayhouseholds{
+            list-style: none;
+        }
+        .clickbutton {
+            background: none; /* remove background of box and its borders, to give it a link like look */
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            font-size: xx-large;
+            color: rgb(7, 154, 252);
+            font-family: 'DejaVu Sans Mono', monospace;
+        }
+        body{
+            background-image: url('static/css/householdspage.png');
+            height: 100%;   
+            background-repeat: no-repeat;
+            background-size: cover; 
+        }
+    </style> 
+    <head>
+        <script src='static/js/jquery-3.6.0.min.js'></script>
+        <script src='static/js/households.js'></script>
+        <script src='static/js/notifications.js'></script>
+        <link rel="stylesheet" href="static/css/main.css" type="text/css" charset="utf-8">
+        <title>Your Households</title>
+    </head>
+    <body>
+
+        <div class="header">
+            {% include "loginnavbar.html" %}
+        </div>
+
+        <div class="maincontent">
+            <div class="maintext"> 
+                <h1>View Your Households</h1>
+                {% for residence in residences %}
+                    <form method="POST" action='setview'>
+                        <input type="hidden" name="Household" value="{{ residence.id }}">
+                        <button class="clickbutton"><b>{{residence.name}}</b></button>
+                    </form>
+                    <p><i>Tenants:</i></p>
+                    <div class="displayhouseholds">
+                        {% for users in userlists[loop.index0] %}
+                            {% for user in users %}
+                                <p>{{user.username}} {% if residence.head_tenant==user.id %} (HEAD TENANT) {% endif %}</p> 
+                            {% endfor %}
+                        {% endfor %}
+                    </div> 
+                {% endfor %}
+                {% if nohouses == True %}
+                    <p>You are in no households.</p>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div class="maintext">
+                <form method="POST" action='addhousehold'>
+                    {% if error=="invalidname" %}
+                        <p style="color:red; font-family: 'Courier New', Courier, monospace;">Invalid Input</p>
+                    {% endif %} 
+                    <h1>Request New Household</h1>
+                    <input id="householdname" class="maininput" placeholder="Household name..." name="HouseholdName"> 
+                    <input id="addhousehold" class="mainbutton" type='submit' value='Submit'> 
+                </form> 
+            </div>
+
+            <br>
+            {% if removable == True %}
+                <div class="maintext">
+                    <h1>Remove Household</h1>
+                    <form method="POST" action='removehousehold'> 
+                        <select id="houseid" class="mainselector" name="HouseID">
+                            {% for house in removables %}
+                                <option value="{{house.id}}">{{house.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <input id="removehousehold" class='mainbutton' type='submit' value='Remove'> 
+                    </form> 
+                </div>
+            {% endif %}
+        </div>       
+    </body>
+</html>
+

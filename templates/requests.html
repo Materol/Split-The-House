@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .displayhouseholds{
+            list-style: none;
+        }
+        .Buttons{
+            display: block;
+            display: inline-block;
+            width: 25%;
+        }
+    </style> 
+    <head>
+        <script src='static/js/jquery-3.6.0.min.js'></script>
+        <script src='static/js/notifications.js'></script>
+        <link rel="stylesheet" href="static/css/main.css" type="text/css" charset="utf-8">
+        <title>Requests</title>
+    </head>
+    <body>
+
+        <div class="header">
+            {% include "loginnavbar.html" %}
+        </div>
+
+        <div class="maincontent">
+            <div class="maintext"> 
+                <h1>Invites To Households</h1>
+                {% for request in requests %}
+                <p>Invite from {{ users[loop.index0].username }} to {{ residences[loop.index0].name }}</p>
+                    <form method="POST" action='approvetenancy'>
+                        <input type="hidden" name="HouseID" value="{{ request.household_id }}">
+                        <div class="Buttons">
+                            <button class="mainbutton">Accept</button>
+                        </div>
+                    </form>
+                    <form method="POST" action='rejecttenancy'>
+                        <div class="Buttons">
+                            <input type="hidden" name="HouseID" value="{{ request.household_id }}">   
+                            <button style="background-color:red;" class="mainbutton">Reject</button>
+                        </div>
+                    </form>
+                {% endfor %}
+                {% if requestcount == 0 %}
+                    <p>No Invites</p>
+                {% endif %}
+            </div>
+            <br>
+            <div class="maintext"> 
+                <h1>Bills For Approval</h1>
+                {% for bill in allBills %}
+                <p>{{ billUsers[loop.index0].username }} says they paid {{ bill.to_pay }} for {{ bill.name }} in household {{ billHouses[loop.index0].name }}</p>
+                    <form method="POST" action='approvebill'>
+                        <input type="hidden" name="BillID" value="{{ bill.id }}">
+                        <div class="Buttons">
+                            <button class="mainbutton">Accept</button>
+                        </div>
+                    </form>
+                    <form method="POST" action='declinebill'>
+                        <div class="Buttons">
+                            <input type="hidden" name="BillID" value="{{ bill.id }}">
+                            <button style="background-color:red;" class="mainbutton">Reject</button>
+                        </div>
+                    </form>
+                {% endfor %}
+                {% if billsCount == 0 %}
+                    <p>No Bills To Settle</p>
+                {% endif %}
+            </div>
+        </div>       
+    </body>
+</html>
+

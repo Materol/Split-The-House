@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        .displayhouseholds{
+            list-style: none;
+        }
+        .Buttons{
+            display: block;
+            display: inline-block;
+            width: 25%;
+        }
+    </style> 
+    <head>
+        <script src='static/js/jquery-3.6.0.min.js'></script>
+        <script src='static/js/login.js'></script>
+        <script src='static/js/notifications.js'></script>
+        <link rel="stylesheet" href="static/css/main.css" type="text/css" charset="utf-8">
+        <title>Admin</title>
+    </head>
+    <body>
+
+        <div class="header">
+            {% include "loginnavbar.html" %}
+        </div>
+
+        <div class="maincontent">
+            <div class="maintext"> 
+                <h1>View Household Requests</h1>
+                {% for residence in residences %}
+                <p>{{ residence.name }} by {{ users[loop.index0].username }}</p>
+                    <form method="POST" action='approvehouse'>
+                        <input type="hidden" name="Household" value="{{ residence.id }}">
+                        <div class="Buttons">
+                            <button class="mainbutton">Accept</button>
+                        </div>
+                    </form>
+                    <form method="POST" action='declinehouse'>
+                        <div class="Buttons">
+                            <input type="hidden" name="Household" value="{{ residence.id }}">
+                            <button style="background-color:red;" class="mainbutton">Reject</button>
+                        </div>
+                    </form>
+                    <div style="clear:left";></div>
+                {% endfor %}
+                {% if housescount == 0 %}
+                    <p>No Household Request</p>
+                {% endif %}
+            </div>
+        </div>       
+    </body>
+</html>
+
