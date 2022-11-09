@@ -1,13 +1,13 @@
 # Split The House
 A Bill Management Website.
 
-This website allowes housemates to split, send and notify about due bills or money owed.
+This website allowss housemates to split and notify about bills or money owed.
 
 It's developed using Flask, JS, JQuery, AJAX, HTML and CSS. 
 
 Database is done using SQLite. 
 
-Comes with a few admin users and one exmaple user. 
+Comes with a few admin users and one example user. 
 
 Features include:
 *Registering users.
